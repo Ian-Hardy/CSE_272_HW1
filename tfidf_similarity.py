@@ -24,7 +24,6 @@ from org.apache.lucene.search.similarities import Similarity
 from org.apache.lucene.analysis.en import EnglishAnalyzer
 from org.apache.lucene.search.similarities import ClassicSimilarity
 
-
 def addDoc(w, title, isbn):
     doc = Document()
     doc.add(TextField("title", title, Field.Store.YES))
@@ -36,8 +35,7 @@ if __name__ == "__main__":
     lucene.initVM()
 
     # 0. Specify the analyzer for tokenizing text.
-    # The same analyzer should be used for indexing and searching
-    # (using stanard english stop set)
+    #The same analyzer should be used for indexing and searching
     stopWords = EnglishAnalyzer.getDefaultStopSet()
     analyzer = StandardAnalyzer(stopWords)
 
@@ -69,84 +67,51 @@ if __name__ == "__main__":
             addDoc(w, t_val, i_val)
     w.close()
 
-    # 2. Work throgh queries
-    file2 = open('queries_extended.txt', 'r')
+    # 2. query
+    file2 = open('query.ohsu.1-63', 'r')
     Lines = file2.readlines()
     i_found = False
     t_found = False
     i_val = None
     t_val = None
     strings = []
-    queries = {}
-    # Create dictionary of query ID to query
     for i, line in enumerate(Lines):
-        if line.startswith('ID: '):
-            i_val = line.split('ID: ')[1].strip()
+        if line[:5] == '<num>':
+            i_val = line.split(' ')[2].strip()
             i_found = True
-            queries[i_val] = []
-            line_count = 0
-            continue
-        if i_found:
-            if line_count >= 5:
-                continue
-            line_count += 1
-            queries[i_val].append(line)
-     # For each query ID, parse each query and get top results
-     # Filter these out to the top 50 across all 5 queries
-    for qid in queries.keys():
-        q_docs = {}
-        doc_counts = {}
-        for text in queries[qid]:
-            text = text.replace('(', ' ')
-            text = text.replace(')', ' ')
-            text = text.replace('[', ' ')
-            text = text.replace(']', ' ')
-            text = text.replace('/', ' ')
-            text = text.replace('"', ' ')
-            text = text.replace('AND', ' ')
-            text = text.replace('-', ' ')
-            text = text.replace('*', ' ')
-            
-            try:
-                q = QueryParser("title", analyzer).parse(text)
-            except:
-                continue
+        if line[:6] == '<desc>':
+            t_val = Lines[i+1].replace('/', ' ')
+            t_found = True
+        
+        if i_found and t_found:
+            i_found = False
+            t_found = False
+
+            # place query in parser
+            q = QueryParser("title", analyzer).parse(t_val)
+
+            # // 3. search
             hitsPerPage = 50
             reader = DirectoryReader.open(index)
             searcher = IndexSearcher(reader)
             searcher.setSimilarity(sim)
             docs = searcher.search(q, hitsPerPage)
             hits = docs.scoreDocs
-            
+            # QueryID Q0 DocID Rank Score RunID
             for j in range(len(hits)):
+                string = ''
+                string += '{} Q0 '.format(i_val)
                 docId = hits[j].doc
                 score = hits[j].score
                 d = searcher.doc(docId)
-                if d.get("isbn") not in q_docs: 
-                    q_docs[d.get("isbn")] = [score]
-                    doc_counts[d.get("isbn")] = 1
-                else:
-                    q_docs[d.get("isbn")].append(score)
-                    doc_counts[d.get("isbn")] += 1
-            reader.close()
-
-        for key in q_docs.keys():
-            q_docs[key] = max(q_docs[key])#/doc_counts[key]
-        
-        sorted_docs = {k: v for k, v in sorted(q_docs.items(), key=lambda item: item[1], reverse=True)}
-        top_docs = list(sorted_docs.keys())[:50]
-        # Write query results
-        # QueryID Q0 DocID Rank Score RunID
-        for j in range(len(top_docs)):
-                string = ''
-                string += '{} Q0 '.format(qid)
-                string += '{} '.format(top_docs[j])
+                string += '{} '.format(d.get("isbn"))
                 string += '{} '.format(j+1)
-                string += '{:.6f} '.format(sorted_docs[top_docs[j]])
-                string += '{}'.format('generative')
+                string += '{:.6f} '.format(score)
+                string += '{}'.format('TF-IDF')
                 strings.append(string)
+            reader.close()
     
-    f = open("generative_run.txt", "w")
+    f = open("tfidf_run.txt", "w")
     for i in range(len(strings)):
         if i<len(strings)-1:
             f.write(strings[i]+'\n')

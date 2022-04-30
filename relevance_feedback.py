@@ -1,6 +1,8 @@
+# indexer.py
 import sys
 import lucene
 import math
+import time
 
 from org.apache.lucene.analysis.standard import StandardAnalyzer
 from org.apache.lucene.analysis import TokenStream
@@ -23,20 +25,7 @@ from org.apache.lucene.store import ByteBuffersDirectory
 from org.apache.lucene.search.similarities import Similarity
 from org.apache.lucene.analysis.tokenattributes import CharTermAttribute
 from org.apache.lucene.analysis.en import EnglishAnalyzer
-#tf-idf
 from org.apache.lucene.search.similarities import ClassicSimilarity
-from org.apache.pylucene.search.similarities import PythonClassicSimilarity
-#boolean
-from org.apache.lucene.search.similarities import BooleanSimilarity
-
-
-# tf
-class TFSimilarity(PythonClassicSimilarity):
-    def __init__(self):
-        super().__init__()
-
-    def idf(self, docFreq, numDocs):
-        return 1.0
 
 # relevance feedback
 # https://stackoverflow.com/questions/15708439/implement-feedback-in-lucene
@@ -47,6 +36,7 @@ def addDoc(w, title, isbn):
     w.addDocument(doc)
 
 if __name__ == "__main__":
+    start = time.time()
     lucene.initVM()
 
     # 0. Specify the analyzer for tokenizing text.
@@ -130,7 +120,6 @@ if __name__ == "__main__":
 
             # Get terms from top 20 results
             # Rank top terms
-            #
             terms = {}
             for j in range(len(hits)):
                 docId = hits[j].doc
@@ -168,11 +157,11 @@ if __name__ == "__main__":
                 score = hits[j].score
                 d = searcher.doc(docId)
                 string += '{} '.format(d.get("isbn"))
-                string += '{} '.format(j)
+                string += '{} '.format(j+1)
                 string += '{:.6f} '.format(score)
                 string += '{}'.format('Relevance')
                 strings.append(string)
-        reader.close()
+            reader.close()
     
     f = open("relevance_run.txt", "w")
     for i in range(len(strings)):
@@ -180,3 +169,5 @@ if __name__ == "__main__":
             f.write(strings[i]+'\n')
         else:
             f.write(strings[i])
+    end = time.time()
+    print(end-start)

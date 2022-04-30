@@ -1,7 +1,7 @@
-# indexer.py
 import sys
 import lucene
 import math
+import time
 
 from org.apache.lucene.analysis.standard import StandardAnalyzer
 from org.apache.lucene.document import Document
@@ -21,23 +21,9 @@ from org.apache.lucene.search import TopDocs
 from org.apache.lucene.store import Directory
 from org.apache.lucene.store import ByteBuffersDirectory
 from org.apache.lucene.search.similarities import Similarity
-#tf-idf
-from org.apache.lucene.search.similarities import ClassicSimilarity
-from org.apache.pylucene.search.similarities import PythonClassicSimilarity
-#boolean
-#from org.apache.lucene.search.similarities import BooleanSimilarity
+from org.apache.lucene.analysis.en import EnglishAnalyzer
+from org.apache.lucene.search.similarities import BooleanSimilarity
 
-
-# tf
-class TFSimilarity(PythonClassicSimilarity):
-    def __init__(self):
-        super().__init__()
-
-    def idf(self, docFreq, numDocs):
-        return 1.0
-
-# relevance feedback
-# https://stackoverflow.com/questions/15708439/implement-feedback-in-lucene
 def addDoc(w, title, isbn):
     doc = Document()
     doc.add(TextField("title", title, Field.Store.YES))
@@ -45,15 +31,17 @@ def addDoc(w, title, isbn):
     w.addDocument(doc)
 
 if __name__ == "__main__":
+    start = time.time()
     lucene.initVM()
 
     # 0. Specify the analyzer for tokenizing text.
     #The same analyzer should be used for indexing and searching
-    analyzer = StandardAnalyzer()
+    stopWords = EnglishAnalyzer.getDefaultStopSet()
+    analyzer = StandardAnalyzer(stopWords)
 
     # 1. create the index
     index = ByteBuffersDirectory()
-    sim = TFSimilarity()
+    sim = BooleanSimilarity()
     config = IndexWriterConfig(analyzer)
     config.setSimilarity(sim)
 
@@ -67,8 +55,8 @@ if __name__ == "__main__":
     i_val = None
     t_val = None
     for i, line in enumerate(Lines):
-        if line[:2] == '.I':
-            i_val = line.split(' ')[1].strip()
+        if line[:2] == '.U':
+            i_val = Lines[i+1].strip('\n')
             i_found = True
         if line.strip() == '.W':
             t_val = Lines[i+1]
@@ -110,45 +98,24 @@ if __name__ == "__main__":
             docs = searcher.search(q, hitsPerPage)
             hits = docs.scoreDocs
             # QueryID Q0 DocID Rank Score RunID
-            for i in range(len(hits)):
+            for j in range(len(hits)):
                 string = ''
                 string += '{} Q0 '.format(i_val)
-                docId = hits[i].doc
-                score = hits[i].score
+                docId = hits[j].doc
+                score = hits[j].score
                 d = searcher.doc(docId)
                 string += '{} '.format(d.get("isbn"))
-                string += '{} '.format(i)
+                string += '{} '.format(j+1)
                 string += '{:.6f} '.format(score)
-                string += '{}'.format('tfidf-Both')
+                string += '{}'.format('boolean')
                 strings.append(string)
+            reader.close()
     
-    f = open("tf_run.txt", "w")
+    f = open("boolean_run.txt", "w")
     for i in range(len(strings)):
-        if i<range(len(strings))-1:
+        if i<len(strings)-1:
             f.write(strings[i]+'\n')
         else:
             f.write(strings[i])
-
-    #print(strings)
-    # # // the "title" arg specifies the default field to use
-    # # // when no field is explicitly specified in the query.
-    # q = QueryParser("title", analyzer).parse(querystr)
-
-    # # // 3. search
-    # hitsPerPage = 50
-    # reader = DirectoryReader.open(index)
-    # searcher = IndexSearcher(reader)
-    # searcher.setSimilarity(sim)
-    # docs = searcher.search(q, hitsPerPage)
-    # hits = docs.scoreDocs
-    # print(hits)
-    # # // 4. display results
-    # print("Found " + str(len(hits)) + " hits.")
-    # for i in range(len(hits)):
-    #     docId = hits[i].doc
-    #     d = searcher.doc(docId)
-    #     print(str((i + 1)) + ". " + d.get("isbn") + "\t" + d.get("title"))
-
-    # // reader can only be closed when there
-    # // is no need to access the documents any more.
-    reader.close()
+    end = time.time()
+    print(end-start)
