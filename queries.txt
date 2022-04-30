@@ -1,0 +1,188 @@
+ID: OHSU1
+Are there adverse effects on lipids when progesterone is given with estrogen replacement therapy
+
+ID: OHSU2
+pathophysiology and treatment of disseminated intravascular coagulation
+
+ID: OHSU3
+anticardiolipin and lupus anticoagulants, pathophysiology, epidemiology, complications
+
+ID: OHSU4
+effectiveness of etidronate in treating hypercalcemia of malignancy
+
+ID: OHSU5
+does estrogen replacement therapy cause breast cancer
+
+ID: OHSU6
+t-cell lymphoma associated with autoimmune symptoms
+
+ID: OHSU7
+lactase deficiency therapy options
+
+ID: OHSU8
+pancytopenia in aids, workup and etiology
+
+ID: OHSU9
+Rh isoimmunization, review topics
+
+ID: OHSU10
+endocarditis, duration of antimicrobial therapy
+
+ID: OHSU11
+chemotherapy advanced for advanced metastatic breast cancer
+
+ID: OHSU12
+isolated hypoaldosteronism, syndromes where hypoaldosteronism and hypokalemia occur concurrently
+
+ID: OHSU13
+sickle cell disease, treatment  advice
+
+ID: OHSU14
+thrombocytopenia in pregnancy, etiology and management
+
+ID: OHSU15
+chronic pain management, review article, use of tricyclic antidepressants
+
+ID: OHSU16
+carotid endarterectomy, when to perform
+
+ID: OHSU17
+review article on adult respiratory syndrome
+
+ID: OHSU18
+RISK FACTORS and TREATMENT for HEPATOCELLULAR CARCINOMA
+
+ID: OHSU19
+FIBROMYALGIA FIBROSITIS, DIAGNOSIS AND TREATMENT 
+
+ID: OHSU20
+DIABETIC GASTROPARESIS, TREATMENT
+
+ID: OHSU21
+back pain, information on diagnosis and treatment
+
+ID: OHSU22
+can radiation therapy cause a delayed pericardial effusion?
+
+ID: OHSU23
+occult blood screening, need for routine screening
+
+ID: OHSU24
+urinary retention, differential diagnosis
+
+ID: OHSU25
+which peripheral neuropathies have associated edema
+
+ID: OHSU26
+isolated systolic hypertension, shep study
+
+ID: OHSU27
+differential diagnosis of U waves
+
+ID: OHSU28
+indications for and success of pericardial windows and pericardectomies
+
+ID: OHSU29
+lupus nephritis, diagnosis and management
+
+ID: OHSU30
+angiotensin converting enzyme inhibitors, review article
+
+ID: OHSU31
+course of anticoagulation with coumadin
+
+ID: OHSU32
+cerebral edema secondary to infection, diagnosis and treatment
+
+ID: OHSU33
+diagnostic and therapeutic work up of breast mass
+
+ID: OHSU34
+hepatobiliary lesions associated with neurofibromatosis
+
+ID: OHSU35
+evaluation for complications and management of bulimia
+
+ID: OHSU36
+treatment of migraine headaches with beta blockers and calcium channel blockers
+
+ID: OHSU37
+prevention, risk factors, pathophysiology of hypothermia
+
+ID: OHSU38
+chronic inflammatory demyelinating polyneuropathy, differential diagnosis and criteria
+
+ID: OHSU39
+outpatient management of diabetes, standard management of diabetics and any new management techniques
+
+ID: OHSU40
+diverticulitis, differential diagnosis and management
+
+ID: OHSU41
+cystic fibrosis and renal failure, effect of long term repeated use of aminoglycosides
+
+ID: OHSU42
+thyrotoxicosis, diagnosis and management
+
+ID: OHSU43
+neuroleptic malignant syndrome, differential diagnosis, treatment
+
+ID: OHSU44
+carcinoid tumors of the liver and pancreas, research, treatments
+
+ID: OHSU45
+radiation induced thyroiditis, differential diagnosis, management
+
+ID: OHSU46
+heat exhaustion, management and pathophysiology
+
+ID: OHSU47
+complications and management of anorexia and bulimia
+
+ID: OHSU48
+aids dementia, workup
+
+ID: OHSU49
+infections in renal transplant patients
+
+ID: OHSU50
+theophylline uses--chronic and acute asthma
+
+ID: OHSU51
+lung cancer, radiation therapy
+
+ID: OHSU52
+surgery vs. percutaneous drainage for lung abscess
+
+ID: OHSU53
+Catamenorrheal Anaphylaxis
+
+ID: OHSU54
+PLASMAPHERESIS AS THERAPEUTIC OPTION for Guillain- Barre syndrome
+
+ID: OHSU55
+Urinary Tract Infection, CRITERIA FOR TREATMENT AND ADMISSION
+
+ID: OHSU56
+infiltrative small bowel processes, information about small bowel lymphoma and heavy alpha chain disease
+
+ID: OHSU57
+iron deficiency anemia, which test is best
+
+ID: OHSU58
+scheurmann's disease, treatment
+
+ID: OHSU59
+sigmoidoscopy in preventive care, whether the recommended frequency of sigmoidoscopy is effective and sensitive in detecting cancer
+
+ID: OHSU60
+how to best control pain and debilitation secondary to osteoporosis in never treated advanced disease
+
+ID: OHSU61
+differential diagnosis of breakthrough vaginal bleeding while on estrogen and progesterone therapy
+
+ID: OHSU62
+review of anemia of chronic illness
+
+ID: OHSU63
+HIV and the GI tract, recent reviews
